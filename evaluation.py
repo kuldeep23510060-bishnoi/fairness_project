@@ -20,8 +20,6 @@ def evaluate(model, df, features, prot_col, pairs, pair_distances, gamma):
 
     acc = float((df_eval["pred_label"] == df_eval["Y"]).mean())
 
-    parity_gap = 0.0
-
     if prot_col in df_eval.columns:
         group0 = df_eval[df_eval[prot_col] == 0]
         group1 = df_eval[df_eval[prot_col] == 1]
