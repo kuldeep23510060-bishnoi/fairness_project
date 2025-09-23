@@ -1,16 +1,12 @@
 import numpy as np
-import pandas as pd
 import torch
 
-DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-
-def evaluate(model, df, features, prot_col, pairs, pair_distances, gamma):
+def evaluate(model, df, features, prot_col, pairs, pair_distances, gamma, device):
 
     model.eval()
 
     with torch.no_grad():
-        X = torch.tensor(df[features].values, device=DEVICE, dtype=torch.float32)
+        X = torch.tensor(df[features].values, device=device, dtype=torch.float32)
         logits = model(X)
 
     preds = torch.sigmoid(logits).cpu().squeeze().numpy()
@@ -25,8 +21,8 @@ def evaluate(model, df, features, prot_col, pairs, pair_distances, gamma):
         group1 = df_eval[df_eval[prot_col] == 1]
 
         if len(group0) > 0 and len(group1) > 0:
-            rate0 = group0["pred_score"].mean()
-            rate1 = group1["pred_score"].mean()
+            rate0 = group0["pred_label"].mean()
+            rate1 = group1["pred_label"].mean()
             parity_gap = abs(rate0 - rate1)
 
     if pairs is not None and len(pairs) > 0 and pair_distances is not None:
