@@ -1,6 +1,5 @@
 import torch
 
-
 def project_onto_l1_ball(v: torch.Tensor, z: float) -> torch.Tensor:
 
     v = v.view(-1)
