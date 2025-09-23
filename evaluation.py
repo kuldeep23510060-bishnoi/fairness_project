@@ -36,8 +36,8 @@ def evaluate(model, df, features, prot_col, pairs, pair_distances, gamma, device
             pd_np = np.array(pair_distances)
             
         violations = (pred_diff > (pd_np + gamma)).mean()
-
         if_viol = float(violations)
+
     else:
         if_viol = 0.0
 
