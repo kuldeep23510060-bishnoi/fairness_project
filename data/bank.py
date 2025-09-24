@@ -1,5 +1,6 @@
 import pandas as pd
 from ucimlrepo import fetch_ucirepo
+import json
 
 def load_ucirepo_350():
 
@@ -17,3 +18,18 @@ def load_ucirepo_350():
     
     return df, protected_col, label_col,  feature_cols, numeric_cols, categorical_cols
 
+df, protected_col, label_col, feature_cols, numeric_cols, categorical_cols = load_ucirepo_350()
+
+
+df.to_csv("data/bank_processed.csv", index=False)
+
+meta = {
+    "protected_col": protected_col,
+    "label_col": label_col,
+    "feature_cols": feature_cols,
+    "numeric_cols": numeric_cols,
+    "categorical_cols": categorical_cols
+}
+
+with open("data/bank_meta.json", "w") as f:
+    json.dump(meta, f, indent=2)

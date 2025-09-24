@@ -1,6 +1,7 @@
 import pandas as pd
+import json
 
-def load_and_preprocess_adult():
+def load_adult():
 
     TRAIN_URL = "https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data"
     TEST_URL = "https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.test"
@@ -41,3 +42,24 @@ def load_and_preprocess_adult():
     label_col = "Y"
 
     return df, protected_col, label_col,  feature_cols, numeric_cols, categorical_cols
+
+
+
+df, protected_col, label_col, feature_cols, numeric_cols, categorical_cols = load_adult()
+
+
+df.to_csv("data/adult_processed.csv", index=False)
+
+meta = {
+    "protected_col": protected_col,
+    "label_col": label_col,
+    "feature_cols": feature_cols,
+    "numeric_cols": numeric_cols,
+    "categorical_cols": categorical_cols
+}
+
+with open("data/adult_meta.json", "w") as f:
+    json.dump(meta, f, indent=2)
+
+
+
