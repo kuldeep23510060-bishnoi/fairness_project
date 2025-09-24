@@ -7,7 +7,6 @@ from data.bank import load_ucirepo_350
 from data.adult import load_adult
 from run_experiments import run_experiments
 
-
 OUTPUT_DIR = "./outputs"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -16,6 +15,15 @@ logger = logging.getLogger("dro")
 
 SEEDS_10 = [123]
 ALPHAS = [0.2]
+HIDDEN = 128
+MB_SIZE = 1024
+NUM_EPOCHS = 20
+LR_THETA = 1e-3
+LR_LAMBDA = 5e-4
+LR_P = 1e-3
+INNER_P_STEPS = 3
+GAMMA = 0.02
+BETA_DRO = 0.1
 
 print("Starting multi-dataset DRO-only experiments. Outputs will be saved to:", OUTPUT_DIR)
 
@@ -33,7 +41,8 @@ datasets.append(("adult", df, protected_col, label_col,  feature_cols, numeric_c
 all_summaries = {}
 for name, df, protected_col, label_col,  feature_cols, numeric_cols, categorical_cols in datasets:
     logger.info("=== Running dataset: %s ===", name)
-    summary_df = run_experiments(name, df, protected_col, label_col,  feature_cols, numeric_cols, categorical_cols, alphas=ALPHAS, seeds=SEEDS_10, outroot=OUTPUT_DIR, logger=logger)
+    summary_df = run_experiments(name, df, protected_col, label_col,  feature_cols, numeric_cols, categorical_cols, ALPHAS, SEEDS_10, OUTPUT_DIR, logger,
+                                 HIDDEN, MB_SIZE, NUM_EPOCHS, LR_THETA,LR_LAMBDA, LR_P, INNER_P_STEPS, GAMMA, BETA_DRO)
     all_summaries[name] = summary_df
 
 if len(all_summaries) > 0:
