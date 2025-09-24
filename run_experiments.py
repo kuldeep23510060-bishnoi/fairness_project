@@ -171,5 +171,6 @@ def run_experiments(name, df_all, protected_col, label_col,  feature_cols, numer
         plt.savefig(outroot / f"{fname}.png")
         plt.close()
 
+
     logger.info(f"[{name}] finished. Outputs saved to {outroot}")
     return summary_df
