@@ -52,7 +52,7 @@ def train_naive(model, train_df, features, label_col, prot_col, mb, epochs, lr, 
 
             if have_pairs:
                 mask_pairs = np.isin(pairs_np[:, 0], idx) & np.isin(pairs_np[:, 1], idx)
-                sel_pair_ids = np.nonzero(mask_pairs)
+                sel_pair_ids = np.nonzero(mask_pairs)[0]
             else:
                 sel_pair_ids = np.array([], dtype=int)
 
